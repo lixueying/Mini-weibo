@@ -7,14 +7,45 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+  @IBOutlet weak var nameLabel: UILabel!
+
+	let viewModel = MomentViewModel.init(momentService: MomentService())
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    attemptFetchMoment()
+  }
+
+  private func attemptFetchMoment() {
+    viewModel.fetchMoments()
+
+    viewModel.updateLoadingStatus = {
+      let _ = self.viewModel.isLoading ? self.activityIndicatorStart() : self.activityIndicatorStop()
     }
 
+    viewModel.showAlertClosure = {
+      if let error = self.viewModel.error {
+          print(error.localizedDescription)
+      }
+    }
 
+    viewModel.didFinishFetch = {
+      self.nameLabel.text = self.viewModel.text
+    }
+  }
+
+  private func activityIndicatorStart() {
+    print("start")
+  }
+
+  private func activityIndicatorStop() {
+    print("stop")
+  }
 }
+
 

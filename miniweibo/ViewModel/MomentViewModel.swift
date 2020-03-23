@@ -1,22 +1,53 @@
-struct MomentViewModel {
-    weak var dataSource : GenericDataSource<Moment>?
+import Foundation
 
-    init(dataSource:  GenericDataSource<Moment>?) {
-        self.dataSource = dataSource
-    }
+class MomentViewModel {
 
-    func fetchMoments() {
-        MomentService.shared.fetchMoments { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let moment) :
-                    self.dataSource?.data.value = moment.data
-                    break
-                case .failure(let error) :
-                    print("Parser error \(error)")
-                    break
-                }
-            }
-        }
+	private var moment: Moment? {
+    didSet {
+      guard let m = moment else { return }
+      self.setupText(with: m)
+      self.didFinishFetch?()
     }
+	}
+  var error: Error? {
+    didSet { self.showAlertClosure?() }
+  }
+  var isLoading: Bool = false {
+    didSet { self.updateLoadingStatus?() }
+  }
+
+  var createdAtString: String?
+  var idString: Int?
+  var textString: String?
+
+  private var momentService: MomentService?
+
+  var showAlertClosure: (() -> ())?
+  var updateLoadingStatus: (() -> ())?
+  var didFinishFetch: (() -> ())?
+
+  init(momentService: MomentService) {
+    self.momentService = momentService
+  }
+
+  func fetchMoments() {
+    self.momentService?.requestFetchMoments(completion: { (moment, error) in
+      if let error = error {
+        self.error = error
+        self.isLoading = false
+        return
+      }
+      self.error = nil
+      self.isLoading = false
+      self.moment = moment
+    })
+  }
+
+  private func setupText(with moment: Moment) {
+    if let created_at = moment.created_at, let id = photo.id, let text = photo.text {
+      self.createdAtString = "Created_at: \(created_at)"
+      self.idString = "Moment ID : \(id)"
+      self.text = text
+    }
+  }
 }

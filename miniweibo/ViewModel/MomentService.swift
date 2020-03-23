@@ -1,22 +1,34 @@
 import Alamofire
+import Foundation
 
-protocol MomentServiceProtocol: class {
-    func fetchMoments()
-    func fetchMomentDetail(_ id: String)
-}
+struct MomentService {
+	static let shared = MomentService()
 
-final class MomentService: MomentServiceProtocol {
-    let endpoint = "http://localhost:3000"
+  let endpoint = "http://localhost:3000"
 
-    func fetchMoments() {
-        AF.request("\(endpoint)/moments").response {
-            response in print(response)
-        }
+  func requestFetchMoments(completion: @escaping (Moment?, Error?) -> ()) {
+    Alamofire.request("\(endpoint)/moments").responseMoment { response in
+      if let error = response.error {
+        completion(nil, error)
+        return
+      }
+      if let moment = response.result.value {
+        completion(moment, nil)
+        return
+      }
     }
+  }
 
-    func fetchMomentDetail(_ id: String) {
-        AF.request("\(endpoint)/moments/\(id)").response {
-            response in print(response)
-        }
+  func requestFetchMomentsById(with id: Int, completion: @escaping (Moment?, Error?) -> ()) {
+    Alamofire.request("\(endpoint)/moments/\(id)").responseMoment { response in
+      if let error = response.error {
+        completion(nil, error)
+        return
+      }
+      if let moment = response.result.value {
+        completion(moment, nil)
+        return
+      }
     }
+  }
 }
