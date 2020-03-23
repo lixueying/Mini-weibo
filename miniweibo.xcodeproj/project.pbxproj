@@ -15,6 +15,8 @@
 		3C8E91F8242869AB00049822 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C8E91F6242869AB00049822 /* LaunchScreen.storyboard */; };
 		3C8E9203242869AB00049822 /* miniweiboTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8E9202242869AB00049822 /* miniweiboTests.swift */; };
 		3C8E920E242869AB00049822 /* miniweiboUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8E920D242869AB00049822 /* miniweiboUITests.swift */; };
+		3C8E921D2428C05C00049822 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C8E921C2428C05C00049822 /* Alamofire.framework */; };
+		3C8E921E2428C05C00049822 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C8E921C2428C05C00049822 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		3C8E921F2428C05C00049822 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3C8E921E2428C05C00049822 /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3C8E91E8242869A900049822 /* miniweibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniweibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C8E91EB242869A900049822 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +65,7 @@
 		3C8E9209242869AB00049822 /* miniweiboUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = miniweiboUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C8E920D242869AB00049822 /* miniweiboUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = miniweiboUITests.swift; sourceTree = "<group>"; };
 		3C8E920F242869AB00049822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3C8E921C2428C05C00049822 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C8E921D2428C05C00049822 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +101,7 @@
 				3C8E9201242869AB00049822 /* miniweiboTests */,
 				3C8E920C242869AB00049822 /* miniweiboUITests */,
 				3C8E91E9242869A900049822 /* Products */,
+				3C8E921B2428C05C00049822 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +147,14 @@
 			path = miniweiboUITests;
 			sourceTree = "<group>";
 		};
+		3C8E921B2428C05C00049822 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3C8E921C2428C05C00049822 /* Alamofire.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,6 +165,8 @@
 				3C8E91E4242869A900049822 /* Sources */,
 				3C8E91E5242869A900049822 /* Frameworks */,
 				3C8E91E6242869A900049822 /* Resources */,
+				3C8E921F2428C05C00049822 /* Embed Frameworks */,
+				3C8E92212428C09400049822 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -253,6 +282,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C8E92212428C09400049822 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3C8E91E4242869A900049822 /* Sources */ = {
@@ -435,6 +485,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = miniweibo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -452,6 +506,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = miniweibo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
